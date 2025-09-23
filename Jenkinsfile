@@ -64,28 +64,28 @@ pipeline {
             steps {
                script {
                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                            sh "docker build -t abrahimcse/bloggingapp:latest ."
+                            sh "docker build -t vedant511/bloggingapp:latest ."
                     }
                }
             }
         }
         stage('Docker Image Scan') {
             steps {
-                sh "trivy image --format table -o trivy-image-report.html abrahimcse/bloggingapp:latest "
+                sh "trivy image --format table -o trivy-image-report.html vedant511/bloggingapp:latest "
             }
         }
         stage('Push Docker Image') {
             steps {
                script {
                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                            sh "docker push abrahimcse/bloggingapp:latest"
+                            sh "docker push vedant511/bloggingapp:latest"
                     }
                }
             }
         }
         stage('Deploy To Kubernetes') {
             steps {
-                withKubeConfig(caCertificate: '', clusterName: 'abrahimcse-cluster', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://< >.ap-southes-1.eks.amazonaws.com') {
+                withKubeConfig(caCertificate: '', clusterName: 'vedant-cluster', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://< >.ap-southes-1.eks.amazonaws.com') {
                       sh "kubectl apply -f deployment-service.yaml"
                 }
             }
@@ -93,7 +93,7 @@ pipeline {
         
         stage('Verify the Deployment') {
             steps {
-                withKubeConfig(caCertificate: '', clusterName: 'abrahimcse-cluster', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://< >.ap-southes-1.eks.amazonaws.com') {
+                withKubeConfig(caCertificate: '', clusterName: 'vedant-cluster', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://< >.ap-southes-1.eks.amazonaws.com') {
                         sh "kubectl get pods -n webapps"
                         sh "kubectl get svc -n webapps"
                 }

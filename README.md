@@ -25,18 +25,67 @@ For continuous integration and deployment (CI/CD), a Jenkins pipeline automates 
 ## Project Structure
 ```
 .
+Devops-Blog-App/
 ├── src/
-│   ├── main/
-│   └── test/
+│ ├── main/
+│ │ ├── java/com/blog/app/
+│ │ └── resources/
+│ │ └── application.properties
+│ └── test/
+│ └── java/com/blog/app/
+├── deployment/
+│ ├── deployment.yml
+│ ├── service.yml
+│ └── ingress.yml (if applicable)
 ├── Dockerfile
 ├── Jenkinsfile
-├── deployment/
-│   ├── service.yml
-│   ├── deployment.yml
+├── terraform/
+│ ├── .terraform.lock.hcl
+│ ├── eks.tf
+│ ├── iam.tf
+│ ├── networking.tf
+│ ├── outputs.tf
+│ ├── provider.tf
+│ ├── security.tf
+│ ├── terraform.tfstate
+│ ├── terraform.tfstate.backup
+│ ├── tplan
+│ ├── variables.tf
+│ ├── versions.tf
 ├── pom.xml
+├── .gitignore
 └── README.md
 ```
 
+---
+
+## Terraform Infrastructure Modules
+
+Within the `terraform/` directory, infrastructure is defined using modular, clear files:
+
+- **provider.tf/versions.tf**: Provider and required Terraform version settings
+- **networking.tf**: VPC, subnets, and networking resources for EKS
+- **security.tf**: Security groups, IAM policies
+- **iam.tf**: IAM roles for EKS cluster and worker nodes
+- **eks.tf**: EKS cluster and node group resources
+- **outputs.tf**: Output variables (kubeconfig, endpoints)
+- **variables.tf**: Configurable variables (region, cluster name, etc.)
+- **tplan**: Terraform plan output or planfile
+
+---
+
+### Terraform Usage
+
+1. **Install Terraform** and ensure AWS CLI is configured.
+2. **Initialize** in the `terraform/` directory:
+
+cd terraform
+terraform init
+
+text
+3. **Plan** and **apply** your infrastructure:
+terraform plan -out tplan
+terraform apply "tplan"
 ---
 
 ## Jenkins Pipeline Stages

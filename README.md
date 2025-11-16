@@ -125,12 +125,12 @@ The Dockerfile defines the steps to containerize the application.
 
 **Example:**
 ```
-FROM openjdk:17-jdk-slim
-WORKDIR /app
-COPY target/blog-app.jar blog-app.jar
+FROM eclipse-temurin:17-jdk-alpine
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "blog-app.jar"]
-```
+ENV APP_HOME /usr/src/app
+WORKDIR $APP_HOME
+COPY target/twitter-app-0.0.3.jar $APP_HOME/app.jar
+ENTRYPOINT ["java","-jar","/usr/src/app/app.jar"]
 
 ---
 

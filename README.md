@@ -78,10 +78,10 @@ Within the `terraform/` directory, infrastructure is defined using modular, clea
 
 1. **Install Terraform** and ensure AWS CLI is configured.
 2. **Initialize** in the `terraform/` directory:
-
+```
 cd terraform
 terraform init
-
+```
 text
 3. **Plan** and **apply** your infrastructure:
 terraform plan -out tplan

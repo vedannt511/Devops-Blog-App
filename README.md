@@ -21,6 +21,21 @@ For continuous integration and deployment (CI/CD), a Jenkins pipeline automates 
 - Container Registry: DockerHub
 
 ---
+## Prerequisites
+
+Before deploying this application, make sure you have the following tools installed and properly configured:
+
+- **Git**: Version control system for source code management.
+- **Docker**: To build and run containers locally, and for testing Docker images before deployment.
+- **kubectl**: Kubernetes command-line tool, configured for your AWS EKS cluster.
+- **Helm**: Kubernetes package manager (optional, but recommended for advanced deployments, monitoring setup, and custom resource management).
+- **AWS CLI**: Configured with necessary IAM permissions for EKS, EC2, VPC, and network resources. Ensure your credentials are valid and have raised service quotas as needed.
+- **Terraform** (recommended) or **Ansible**: For infrastructure provisioning. Terraform should be version 1.3 or higher. Ensure `provider.tf` and backend S3/DynamoDB are configured for remote state storage.
+- **Prometheus & Grafana**: Monitoring and dashboard tools for Kubernetes clusters and application metrics, typically deployed via Helm.
+- **Jenkins** (or another CI/CD tool): For automated pipeline runs and integration steps (building, testing, deploying).
+- **AWS IAM Authenticator**: For authenticating via Kubernetes RBAC on AWS EKS.
+
+
 
 ## Project Structure
 ```
@@ -182,6 +197,10 @@ ENV APP_HOME /usr/src/app
 WORKDIR $APP_HOME
 COPY target/twitter-app-0.0.3.jar $APP_HOME/app.jar
 ENTRYPOINT ["java","-jar","/usr/src/app/app.jar"]
+```
+To run locally
+```
+docker build -t blogapp .
 ```
 ---
 

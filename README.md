@@ -82,10 +82,12 @@ Within the `terraform/` directory, infrastructure is defined using modular, clea
 cd terraform
 terraform init
 ```
-text
+
 3. **Plan** and **apply** your infrastructure:
+```
 terraform plan -out tplan
 terraform apply "tplan"
+```
 ---
 
 ## Jenkins Pipeline Stages

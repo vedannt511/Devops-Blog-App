@@ -182,79 +182,59 @@ ENV APP_HOME /usr/src/app
 WORKDIR $APP_HOME
 COPY target/twitter-app-0.0.3.jar $APP_HOME/app.jar
 ENTRYPOINT ["java","-jar","/usr/src/app/app.jar"]
-
+```
 ---
 
 ## Kubernetes Deployment Files
 
-### deployment.yml
+### deployment-service.yml
 ```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: blog-app-deployment
+  name: bloggingapp-deployment
 spec:
-  replicas: 3
   selector:
     matchLabels:
-      app: blog-app
+      app: bloggingapp
+  replicas: 2
   template:
     metadata:
       labels:
-        app: blog-app
+        app: bloggingapp
     spec:
       containers:
-        - name: blog-app
-          image: your-dockerhub-username/blog-app:latest
+        - name: bloggingapp
+          image: vedant511/blogapp:latest # Updated image to private DockerHub image
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
-```
-
-### service.yml
-```
+      imagePullSecrets:
+        - name: regcred # Reference to the Docker registry secret
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: blog-app-service
+  name: bloggingapp-ssvc
 spec:
-  type: LoadBalancer
   selector:
-    app: blog-app
+    app: bloggingapp
   ports:
-    - protocol: TCP
+    - protocol: "TCP"
       port: 80
-      targetPort: 8080
+      targetPort: 8080 
+  type: LoadBalancer
 ```
 
----
 
-## Environment Configuration
-Configuration properties can be defined either in:
-- `application.properties` or `application.yml`
-- Kubernetes Secrets and ConfigMaps for sensitive data (database credentials, API keys, etc.)
 
 ---
 
 ## Monitoring and Logging
 For observability:
-- Use AWS CloudWatch for centralized logging.
-- Integrate Prometheus and Grafana for real-time metrics visualization.
-- Enable readiness and liveness probes in Kubernetes for better health monitoring.
+- Used AWS CloudWatch for centralized logging.
+- Integrated Prometheus and Grafana for real-time metrics visualization.
+
 
 ---
 
-## Future Enhancements
-- Add frontend integration using React or Angular.
-- Implement Helm charts for simplified Kubernetes deployment.
-- Add automated rollback on failed deployment.
-- Set up Slack or email notifications in Jenkins for build status updates.
-
----
-
-## License
-This project is licensed under the MIT License.
-
-```
-***
-
-Would you like a version of this README that includes the Jenkinsfile code integrated at the end as well?

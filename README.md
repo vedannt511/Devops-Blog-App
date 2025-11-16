@@ -28,9 +28,8 @@ Before deploying this application, make sure you have the following tools instal
 - **Git**: Version control system for source code management.
 - **Docker**: To build and run containers locally, and for testing Docker images before deployment.
 - **kubectl**: Kubernetes command-line tool, configured for your AWS EKS cluster.
-- **Helm**: Kubernetes package manager (optional, but recommended for advanced deployments, monitoring setup, and custom resource management).
 - **AWS CLI**: Configured with necessary IAM permissions for EKS, EC2, VPC, and network resources. Ensure your credentials are valid and have raised service quotas as needed.
-- **Terraform** (recommended) or **Ansible**: For infrastructure provisioning. Terraform should be version 1.3 or higher. Ensure `provider.tf` and backend S3/DynamoDB are configured for remote state storage.
+- **Terraform** : For infrastructure provisioning. Terraform should be version 1.3 or higher. 
 - **Prometheus & Grafana**: Monitoring and dashboard tools for Kubernetes clusters and application metrics, typically deployed via Helm.
 - **Jenkins** (or another CI/CD tool): For automated pipeline runs and integration steps (building, testing, deploying).
 - **AWS IAM Authenticator**: For authenticating via Kubernetes RBAC on AWS EKS.
